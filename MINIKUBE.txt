@@ -1,0 +1,87 @@
+**MINIKUBE**
+
+minikube start --driver=docker
+
+minikube kubectl -- get pods -A
+
+kubectl version --client
+
+minikube start
+
+kubectl create deployment mynginx --image=nginx
+
+kubectl get deployments
+
+kubectl expose deployment mynginx --type=NodePort --port=80 --target-port=80
+
+kubectl scale deployment mynginx --replicas=4
+
+kubectl get service myngnix
+
+kubectl port-forward svc/mynginx 8081:80
+
+Open localhost after that delete
+
+kubectl delete deployment mynginx
+kubectl delete service mynginx
+
+minikube stop
+
+minikube delete
+
+**NAGIOS**
+
+docker pull jasonrivers/nagios:latest
+
+docker run --name nagiosdemo -p 8888:80 jasonrivers/nagios:latest
+docker stop nagiosdemo
+Delete the Container:
+Command:
+docker rm nagiosdemo
+ 
+Remove the Image (Optional):
+List images:
+docker images
+Delete the Nagios image:
+docker rmijasonrivers/nagios:latest
+
+
+pipeline 
+pipeline {
+    agent any
+    tools{
+        maven 'maven'
+    }
+    stages {
+        stage('git repo & clean') {
+            steps {
+                bat "rmdir /s /q jenkin-web || exit 0"
+                bat "git clone https://github.com/Hasinireddy11/jenkin-web.git"
+                bat "mvn clean -f jenkin-web"
+            }
+        }
+        stage('install') {
+            steps {
+                bat "mvn install -f jenkin-web"
+            }
+        }
+        stage('test') {
+            steps {
+                bat "mvn test -f jenkin-web"
+            }
+        }
+        stage('package') {
+            steps {
+                bat "mvn package -f jenkin-web"
+            }
+        }
+    }
+}
+aws
+FROM tomcat:9.0
+
+RUN rm -rf /usr/local/tomcat/webapps/*
+
+COPY target/*.war /usr/local/tomcat/webapps/ROOT.war
+
+CMD ["catalina.sh", "run"]
